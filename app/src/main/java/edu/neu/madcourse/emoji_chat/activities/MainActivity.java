@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // test commit
         sender_name_text_view = findViewById(R.id.sender_name_edit_text_view);
         receiver_name_text_view = findViewById(R.id.receiver_name_edit_text_view);
         start_chat_button = findViewById(R.id.start_chat_button);
