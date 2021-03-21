@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "798289467139",
+    "firebase_url": "https://emoji-chat-c779b-default-rtdb.firebaseio.com",
+    "project_id": "emoji-chat-c779b",
+    "storage_bucket": "emoji-chat-c779b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798289467139:android:c88278fe637fe402403b36",
+        "android_client_info": {
+          "package_name": "edu.neu.madcourse.emoji_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798289467139-tlqn3rd36i98hnr5220c46bevqb3plfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvcL7J-RWXDLLJ5-glrw9XO-dXJZFn6GM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798289467139-tlqn3rd36i98hnr5220c46bevqb3plfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
