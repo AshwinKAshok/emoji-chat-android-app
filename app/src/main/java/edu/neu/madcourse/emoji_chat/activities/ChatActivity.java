@@ -65,6 +65,8 @@ public class ChatActivity extends AppCompatActivity {
         child_node_sender_messages = root_node.getReference("messages").child(sender_messages_db_name);
         child_node_receiver_message = root_node.getReference("messages").child(receiver_messages_db_name);
 
+
+
         child_node_sender_messages.addChildEventListener(new ChildEventListener() {
 
             @Override

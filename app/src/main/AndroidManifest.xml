@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Emoji_chat">
-        <activity android:name=".activities.ChatActivity"></activity>
+        <activity android:name=".activities.AllMessagesActivity"></activity>
+        <activity android:name=".activities.SendMessageActivity" />
+        <activity android:name=".activities.UserLandingPageActivity" />
+        <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

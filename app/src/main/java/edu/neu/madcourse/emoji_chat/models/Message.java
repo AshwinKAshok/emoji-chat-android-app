@@ -3,12 +3,15 @@ package edu.neu.madcourse.emoji_chat.models;
 public class Message {
     String sender;
     String receiver;
-    String message;
+    String img_src;
+
+    public Message() {
+    }
 
     public Message(String sender, String receiver, String message) {
         this.sender = sender;
         this.receiver = receiver;
-        this.message = message;
+        this.img_src = message;
     }
 
     public String getSender() {
@@ -27,11 +30,11 @@ public class Message {
         this.receiver = receiver;
     }
 
-    public String getMessage() {
-        return message;
+    public String getImg_src() {
+        return img_src;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setImg_src(String img_src) {
+        this.img_src = img_src;
     }
 }
