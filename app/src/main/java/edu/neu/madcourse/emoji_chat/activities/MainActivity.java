@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // test commit
         sender_name_text_view = findViewById(R.id.sender_name_edit_text_view);
         login_button = findViewById(R.id.login_button);
 
