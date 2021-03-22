@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,8 +25,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
     // TextView message_text_view;
     Button send_message_button;
 
-    String sender_name;
-    String receiver_name;
+    String senderName;
+    String receiverName;
 
     FirebaseDatabase root_node;
     DatabaseReference child_node_ref;
@@ -49,8 +51,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
         receiver_name_text_view = findViewById(R.id.receiver_name_edit_text_view);
         receiver_name_text_view.setText("");
-        // message_text_view = findViewById(R.id.receiver_message_edit_text_view);
         send_message_button = findViewById(R.id.send_message_button);
+        root_node = FirebaseDatabase.getInstance();
 
         // ids of emoji image views
         emoji_1 = findViewById(R.id.imageView1);
@@ -62,25 +64,48 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
         // getting the logged in username (sender)
         Bundle extras = getIntent().getExtras();
+
         if(extras != null) {
-            sender_name = extras.getString("sender_name");
+            senderName = extras.getString("sender_name");
         }
 
         // to know which emoji the user has clicked
         setEmojiListeners();
 
-        send_message_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                receiver_name = receiver_name_text_view.getText().toString();
-                String msg = "Hardcoded Test message"; //message_text_view.getText().toString();
+        send_message_button.setOnClickListener(v -> {
+            receiverName = receiver_name_text_view.getText().toString();
+            DatabaseReference usersRef = root_node.getReference("users");
 
-                root_node = FirebaseDatabase.getInstance();
-                child_node_ref = root_node.getReference("messages").child(receiver_name + "-received");
+            if (receiverName.isEmpty() && !senderName.equals(receiverName)) {
+                Snackbar.make(v, "Please enter a valid username to send sticker",
+                        Snackbar.LENGTH_LONG).show();
+            } else {
+                usersRef.orderByChild("name")
+                        .equalTo(receiverName)
+                        .get()
+                        .addOnCompleteListener((OnCompleteListener<DataSnapshot>) task -> {
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase access unsuccessful", "Error getting data", task.getException());
+                                Snackbar.make(v, "Please try again!",
+                                        Snackbar.LENGTH_LONG).show();
+                            } else {
+                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
 
-                Message message = new Message(sender_name, receiver_name, msg);
-                DatabaseReference newRef = child_node_ref.push();
-                newRef.setValue(message);
+                                // Fetch task success, but return value == null means no such user exists
+                                if(task.getResult().getValue() == null) {
+                                    Snackbar.make(v, "Please enter a valid username. " +
+                                                    "Entered user doesn't exists.",
+                                            Snackbar.LENGTH_SHORT).show();
+                                } else {
+                                    String msg = "Hardcoded Test message"; //message_text_view.getText().toString();
+                                    Message message = new Message(senderName, receiverName, msg);
+                                    child_node_ref = root_node.getReference("messages")
+                                            .child(receiverName + "-received");
+                                    DatabaseReference newRef = child_node_ref.push();
+                                    newRef.setValue(message);
+                                }
+                            }
+                        });
             }
         });
 
