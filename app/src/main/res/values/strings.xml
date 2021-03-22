@@ -10,4 +10,7 @@
     <string name="enter_text_message_text_view">Enter img src</string>
     <string name="create_user_button">Create new user</string>
     <string name="send_sticker_to">Send sticker to:</string>
+    <string name="item_name">From:</string>
+    <string name="item_description">User</string>
+    <string name="description">This image acts as an icon.</string>
 </resources>
