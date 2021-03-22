@@ -30,7 +30,7 @@ public class StickerRVAdapter extends RecyclerView.Adapter<StickerRVAdapter.Stic
 
         public void setBodyImageView(String resource) {
             try {
-                int resourceID = context.getResources().getIdentifier(resource, "drawable", context.getPackageName());
+                int resourceID = context.getResources().getIdentifier(resource, "mipmap", context.getPackageName());
                 bodyImageView.setImageResource(resourceID);
             } catch (Exception e) {
                 // _resource was not a valid file/ID

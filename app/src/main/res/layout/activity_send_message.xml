@@ -45,81 +45,77 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:tag="ic_emoji_sunglass"
+        android:tag="ic_emoji_smile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_emoji_sunglass"
+        android:src="@mipmap/ic_emoji_smile"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receiver_name_edit_text_view"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/receiver_name_edit_text_view" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:tag="ic_emoji_sunglass"
+        android:tag="ic_emoji_laugh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_emoji_sunglass"
+        android:src="@mipmap/ic_emoji_laugh"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView1"
-        app:layout_constraintTop_toBottomOf="@+id/receiver_name_edit_text_view"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/receiver_name_edit_text_view" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:tag="ic_emoji_sunglass"
+        android:tag="ic_emoji_sad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_emoji_sunglass"
+        android:src="@mipmap/ic_emoji_sad"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView1"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:tag="ic_emoji_sunglass"
+        android:tag="ic_emoji_angry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_emoji_sunglass"
+        android:src="@mipmap/ic_emoji_angry"
         app:layout_constraintBottom_toTopOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        tools:srcCompat="@tools:sample/avatars" />
+        />
 
     <ImageView
         android:id="@+id/imageView5"
-        android:tag="ic_emoji_sunglass"
+        android:tag="ic_emoji_love"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_emoji_sunglass"
+        android:src="@mipmap/ic_emoji_love"
         app:layout_constraintBottom_toTopOf="@+id/send_message_button"
         app:layout_constraintEnd_toStartOf="@+id/imageView6"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        tools:srcCompat="@tools:sample/avatars" />
+        />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:tag="ic_emoji_sunglass"
+        android:tag="ic_emoji_cool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_emoji_sunglass"
+        android:src="@mipmap/ic_emoji_cool"
         app:layout_constraintBottom_toTopOf="@+id/send_message_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
