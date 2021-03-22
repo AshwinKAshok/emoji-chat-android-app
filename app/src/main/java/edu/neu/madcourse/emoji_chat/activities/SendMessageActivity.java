@@ -98,7 +98,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
                                                     "Entered user doesn't exists.",
                                             Snackbar.LENGTH_SHORT).show();
                                 } else {
-                                    String msg = "Hardcoded Test message"; //message_text_view.getText().toString();
+                                    String msg = selected_emoji.getTag().toString(); //message_text_view.getText().toString();
                                     Message message = new Message(senderName, receiverName, msg);
                                     child_node_ref = root_node.getReference("messages")
                                             .child(receiverName + "-received");
@@ -126,27 +126,21 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
         switch (v.getId()){
             case R.id.imageView1:
-                receiver_name_text_view.setText("Emoji 1");
                 highlightSelectedEmoji(R.id.imageView1);
                 break;
             case R.id.imageView2:
-                receiver_name_text_view.setText("Emoji 2");
                 highlightSelectedEmoji(R.id.imageView2);
                 break;
             case R.id.imageView3:
-                receiver_name_text_view.setText("Emoji 3");
                 highlightSelectedEmoji(R.id.imageView3);
                 break;
             case R.id.imageView4:
-                receiver_name_text_view.setText("Emoji 4");
                 highlightSelectedEmoji(R.id.imageView4);
                 break;
             case R.id.imageView5:
-                receiver_name_text_view.setText("Emoji 5");
                 highlightSelectedEmoji(R.id.imageView5);
                 break;
             case R.id.imageView6:
-                receiver_name_text_view.setText("Emoji 6");
                 highlightSelectedEmoji(R.id.imageView6);
                 break;
         }
