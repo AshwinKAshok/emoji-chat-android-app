@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +18,7 @@ import edu.neu.madcourse.emoji_chat.models.Message;
 public class SendMessageActivity extends AppCompatActivity {
 
     TextView receiver_name_text_view;
-    TextView message_text_view;
+    // TextView message_text_view;
     Button send_message_button;
 
     String sender_name;
@@ -26,14 +27,33 @@ public class SendMessageActivity extends AppCompatActivity {
     FirebaseDatabase root_node;
     DatabaseReference child_node_ref;
 
+    // Stickers
+    ImageView emoji_1;
+    ImageView emoji_2;
+    ImageView emoji_3;
+    ImageView emoji_4;
+    ImageView emoji_5;
+    ImageView emoji_6;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
 
         receiver_name_text_view = findViewById(R.id.receiver_name_edit_text_view);
-        message_text_view = findViewById(R.id.receiver_message_edit_text_view);
+        receiver_name_text_view.setText("");
+        // message_text_view = findViewById(R.id.receiver_message_edit_text_view);
         send_message_button = findViewById(R.id.send_message_button);
+
+        // ids for image views
+        emoji_1 = findViewById(R.id.imageView1);
+        emoji_2 = findViewById(R.id.imageView2);
+        emoji_3 = findViewById(R.id.imageView3);
+        emoji_4 = findViewById(R.id.imageView4);
+        emoji_5 = findViewById(R.id.imageView5);
+        emoji_6 = findViewById(R.id.imageView6);
 
         Bundle extras = getIntent().getExtras();
 
@@ -45,7 +65,7 @@ public class SendMessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 receiver_name = receiver_name_text_view.getText().toString();
-                String msg = message_text_view.getText().toString();
+                String msg = "Hardcoded Test message"; //message_text_view.getText().toString();
 
                 root_node = FirebaseDatabase.getInstance();
                 child_node_ref = root_node.getReference("messages").child(receiver_name + "-received");

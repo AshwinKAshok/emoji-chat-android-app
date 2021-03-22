@@ -9,4 +9,5 @@
     <string name="start_all_received_messages_button">All received messages</string>
     <string name="enter_text_message_text_view">Enter img src</string>
     <string name="create_user_button">Create new user</string>
+    <string name="send_sticker_to">Send sticker to:</string>
 </resources>
