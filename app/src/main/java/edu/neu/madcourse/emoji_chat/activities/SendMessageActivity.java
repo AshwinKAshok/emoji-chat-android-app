@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     ImageView selected_emoji;
 
-    private static final int HIGHLIGHT_COLOR = Color.argb(50, 100, 100, 100);
+    private static final int HIGHLIGHT_COLOR = Color.argb(75, 100, 100, 200);
     private static final int NON_HIGHLIGHT_COLOR = Color.argb(0, 0, 0, 0);
 
     @Override
@@ -171,5 +172,6 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         }
         selected_emoji = findViewById(newSelectedEmojiId);
         selected_emoji.setColorFilter(HIGHLIGHT_COLOR);
+
     }
 }
