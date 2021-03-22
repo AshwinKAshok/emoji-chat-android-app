@@ -49,7 +49,7 @@ public class AllMessagesActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Message msg = dataSnapshot.getValue(Message.class);
-                all_messages += msg.getImg_src();
+                all_messages += "Received from: "+ msg.getSender() + " Img url: " + msg.getImg_src();
                 all_messages += "\n";
 
                 all_messages_text_view.setText(all_messages);
