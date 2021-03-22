@@ -20,7 +20,6 @@ import edu.neu.madcourse.emoji_chat.R;
 import edu.neu.madcourse.emoji_chat.models.Message;
 
 public class ChatActivity extends AppCompatActivity {
-    // test push comment
     TextView sender_messages;
     TextView receiver_messages;
     TextView enter_text_message;
