@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/messages_count_text_view"
-        android:layout_width="257dp"
-        android:layout_height="216dp"
-        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/start_send_message_activity_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_send_activity_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/start_show_all_messages_activity_button"
+        app:layout_constraintBottom_toTopOf="@id/start_show_all_messages_activity_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messages_count_text_view" />
 
@@ -32,6 +32,7 @@
         android:text="@string/start_all_received_messages_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messages_count_text_view"
-        app:layout_constraintVertical_bias="0.501" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_send_message_activity_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

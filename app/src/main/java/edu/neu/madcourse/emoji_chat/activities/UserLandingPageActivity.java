@@ -5,17 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import edu.neu.madcourse.emoji_chat.R;
+import edu.neu.madcourse.emoji_chat.models.Users;
 
 public class UserLandingPageActivity extends AppCompatActivity {
 
     TextView messages_count_text_view;
     Button start_send_messages_activity_button;
-    Button start_all_messages_activty_button;
+    Button start_all_messages_activity_button;
 
     String sender_name;
 
@@ -26,30 +34,56 @@ public class UserLandingPageActivity extends AppCompatActivity {
 
         messages_count_text_view = findViewById(R.id.messages_count_text_view);
         start_send_messages_activity_button = findViewById(R.id.start_send_message_activity_button);
-        start_all_messages_activty_button = findViewById(R.id.start_show_all_messages_activity_button);
-
+        start_all_messages_activity_button = findViewById(R.id.start_show_all_messages_activity_button);
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
             sender_name = extras.getString("sender_name");
         }
 
-        start_send_messages_activity_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sent_message_activity = new Intent(getApplicationContext(), SendMessageActivity.class);
-                sent_message_activity.putExtra("sender_name", sender_name);
-                startActivity(sent_message_activity);
-            }
+        int currMessageCount = getSendMessagesCountForUser(sender_name);
+        String message = "You have sent " + currMessageCount + " stickers in total";
+        messages_count_text_view.setText(message);
+
+        start_send_messages_activity_button.setOnClickListener(v -> {
+            Intent sent_message_activity = new Intent(getApplicationContext(), SendMessageActivity.class);
+            sent_message_activity.putExtra("sender_name", sender_name);
+            startActivity(sent_message_activity);
         });
 
-        start_all_messages_activty_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent all_messages_activity = new Intent(getApplicationContext(), AllMessagesActivity.class);
-                all_messages_activity.putExtra("curr_user_name", sender_name);
-                startActivity(all_messages_activity);
-            }
+        start_all_messages_activity_button.setOnClickListener(v -> {
+            Intent all_messages_activity = new Intent(getApplicationContext(), AllMessagesActivity.class);
+            all_messages_activity.putExtra("curr_user_name", sender_name);
+            startActivity(all_messages_activity);
         });
-    };
+    }
+
+    private int getSendMessagesCountForUser(String userName) {
+        FirebaseDatabase root_node = FirebaseDatabase.getInstance();
+        DatabaseReference usersRef = root_node.getReference("users");
+        AtomicInteger msgCount = new AtomicInteger();
+
+        usersRef.orderByChild("name")
+                .equalTo(userName)
+                .get()
+                .addOnCompleteListener((OnCompleteListener<DataSnapshot>) task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase access unsuccessful", "Error getting data", task.getException());
+                    } else {
+                        if(task.getResult().getValue() == null) {
+                            // should not be null
+                            Log.e("firebase wrong result", "Null message count value. " +
+                                    "Should not happen", task.getException());
+                        } else {
+                            System.out.println(task.getResult().getValue());
+                            HashMap<Object, HashMap<String, String>> map = (HashMap<Object, HashMap<String, String>>) task.getResult().getValue();
+                            for (HashMap<String, String> user: map.values()) {
+                                msgCount.set(Integer.parseInt(user.get("count")));
+                            }
+                        }
+                    }
+                });
+
+        return msgCount.get();
+    }
 }
