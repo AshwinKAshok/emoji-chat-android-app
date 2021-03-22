@@ -2,12 +2,14 @@ package edu.neu.madcourse.emoji_chat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -15,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import edu.neu.madcourse.emoji_chat.R;
 import edu.neu.madcourse.emoji_chat.models.Message;
 
-public class SendMessageActivity extends AppCompatActivity {
+public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView receiver_name_text_view;
     // TextView message_text_view;
@@ -35,7 +37,10 @@ public class SendMessageActivity extends AppCompatActivity {
     ImageView emoji_5;
     ImageView emoji_6;
 
+    ImageView selected_emoji;
 
+    private static final int HIGHLIGHT_COLOR = Color.argb(50, 100, 100, 100);
+    private static final int NON_HIGHLIGHT_COLOR = Color.argb(0, 0, 0, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,7 @@ public class SendMessageActivity extends AppCompatActivity {
         // message_text_view = findViewById(R.id.receiver_message_edit_text_view);
         send_message_button = findViewById(R.id.send_message_button);
 
-        // ids for image views
+        // ids of emoji image views
         emoji_1 = findViewById(R.id.imageView1);
         emoji_2 = findViewById(R.id.imageView2);
         emoji_3 = findViewById(R.id.imageView3);
@@ -55,11 +60,14 @@ public class SendMessageActivity extends AppCompatActivity {
         emoji_5 = findViewById(R.id.imageView5);
         emoji_6 = findViewById(R.id.imageView6);
 
+        // getting the logged in username (sender)
         Bundle extras = getIntent().getExtras();
-
         if(extras != null) {
             sender_name = extras.getString("sender_name");
         }
+
+        // to know which emoji the user has clicked
+        setEmojiListeners();
 
         send_message_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,5 +84,53 @@ public class SendMessageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void setEmojiListeners(){
+        emoji_1.setOnClickListener(this);
+        emoji_2.setOnClickListener(this);
+        emoji_3.setOnClickListener(this);
+        emoji_4.setOnClickListener(this);
+        emoji_5.setOnClickListener(this);
+        emoji_6.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.imageView1:
+                receiver_name_text_view.setText("Emoji 1");
+                highlightSelectedEmoji(R.id.imageView1);
+                break;
+            case R.id.imageView2:
+                receiver_name_text_view.setText("Emoji 2");
+                highlightSelectedEmoji(R.id.imageView2);
+                break;
+            case R.id.imageView3:
+                receiver_name_text_view.setText("Emoji 3");
+                highlightSelectedEmoji(R.id.imageView3);
+                break;
+            case R.id.imageView4:
+                receiver_name_text_view.setText("Emoji 4");
+                highlightSelectedEmoji(R.id.imageView4);
+                break;
+            case R.id.imageView5:
+                receiver_name_text_view.setText("Emoji 5");
+                highlightSelectedEmoji(R.id.imageView5);
+                break;
+            case R.id.imageView6:
+                receiver_name_text_view.setText("Emoji 6");
+                highlightSelectedEmoji(R.id.imageView6);
+                break;
+        }
+    }
+
+    public void highlightSelectedEmoji(int newSelectedEmojiId){
+        if(selected_emoji != null){
+            selected_emoji.setColorFilter(NON_HIGHLIGHT_COLOR);
+        }
+        selected_emoji = findViewById(newSelectedEmojiId);
+        selected_emoji.setColorFilter(HIGHLIGHT_COLOR);
     }
 }
