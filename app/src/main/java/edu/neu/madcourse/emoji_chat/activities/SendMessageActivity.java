@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -17,13 +16,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 import edu.neu.madcourse.emoji_chat.R;
 import edu.neu.madcourse.emoji_chat.models.Message;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView receiver_name_text_view;
-    // TextView message_text_view;
     Button send_message_button;
 
     String senderName;
@@ -31,6 +31,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     FirebaseDatabase root_node;
     DatabaseReference child_node_ref;
+    DatabaseReference usersRef;
 
     // Stickers
     ImageView emoji_1;
@@ -54,6 +55,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         receiver_name_text_view.setText("");
         send_message_button = findViewById(R.id.send_message_button);
         root_node = FirebaseDatabase.getInstance();
+        usersRef = root_node.getReference("users");
 
         // ids of emoji image views
         emoji_1 = findViewById(R.id.imageView1);
@@ -98,6 +100,9 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
                                                     "Entered user doesn't exists.",
                                             Snackbar.LENGTH_SHORT).show();
                                 } else {
+                                    // Increment send message counter of sender username
+                                    incrementSendMessagesCountForUser(senderName);
+
                                     String msg = selected_emoji.getTag().toString(); //message_text_view.getText().toString();
                                     Message message = new Message(senderName, receiverName, msg);
                                     child_node_ref = root_node.getReference("messages")
@@ -152,5 +157,35 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         }
         selected_emoji = findViewById(newSelectedEmojiId);
         selected_emoji.setColorFilter(HIGHLIGHT_COLOR);
+    }
+
+    private void incrementSendMessagesCountForUser(String userName) {
+        usersRef.orderByChild("name")
+                .equalTo(userName)
+                .get()
+                .addOnCompleteListener((OnCompleteListener<DataSnapshot>) task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase access unsuccessful", "Error getting data", task.getException());
+                    } else {
+                        if(task.getResult().getValue() == null) {
+                            // should not be null
+                            Log.e("firebase wrong result", "Null message count value. " +
+                                    "Should not happen", task.getException());
+                        } else {
+                            System.out.println(task.getResult().getValue());
+                            HashMap<String, HashMap<String, String>> map = (HashMap<String, HashMap<String, String>>) task.getResult().getValue();
+                            String userId = "";
+                            int count = 0;
+                            for (String key: map.keySet()) {
+                                userId = key;
+                                count = Integer.parseInt(map.get(key).get("count"));
+                            }
+
+                            // increment current count value and put back to database
+                            count++;
+                            usersRef.child(userId).child("count").setValue(Integer.toString(count));
+                        }
+                    }
+                });
     }
 }
