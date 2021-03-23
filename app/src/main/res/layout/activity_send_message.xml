@@ -9,13 +9,16 @@
     <TextView
         android:id="@+id/textView_send_to"
         android:layout_width="wrap_content"
-        android:layout_height="39dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/send_sticker_to"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/receiver_name_edit_text_view"
         app:layout_constraintEnd_toStartOf="@+id/receiver_name_edit_text_view"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,32 +26,26 @@
         android:id="@+id/receiver_name_edit_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:ems="10"
-        android:maxLength="10"
         android:inputType="textPersonName"
+        android:maxLength="10"
         android:text="@string/receiver_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/textView_send_to"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="1"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/send_message_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send_text_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <ImageView
         android:id="@+id/imageView1"
-        android:tag="ic_emoji_smile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/ic_emoji_smile"
-        android:layout_marginTop="5dp"
+        android:tag="ic_emoji_smile"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -57,11 +54,11 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:tag="ic_emoji_laugh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/ic_emoji_laugh"
-        android:layout_marginTop="5dp"
+        android:tag="ic_emoji_laugh"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,11 +67,11 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:tag="ic_emoji_sad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_emoji_sad"
         android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_emoji_sad"
+        android:tag="ic_emoji_sad"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.5"
@@ -83,44 +80,51 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:tag="ic_emoji_angry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_emoji_angry"
         android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_emoji_angry"
+        android:tag="ic_emoji_angry"
         app:layout_constraintBottom_toTopOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <ImageView
         android:id="@+id/imageView5"
-        android:tag="ic_emoji_love"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_emoji_love"
         android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_emoji_love"
+        android:tag="ic_emoji_love"
         app:layout_constraintBottom_toTopOf="@+id/send_message_button"
         app:layout_constraintEnd_toStartOf="@+id/imageView6"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:tag="ic_emoji_cool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_emoji_cool"
         android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_emoji_cool"
+        android:tag="ic_emoji_cool"
         app:layout_constraintBottom_toTopOf="@+id/send_message_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
+    <Button
+        android:id="@+id/send_message_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/send_text_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
