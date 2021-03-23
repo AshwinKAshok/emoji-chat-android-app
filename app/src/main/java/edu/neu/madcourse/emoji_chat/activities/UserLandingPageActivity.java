@@ -64,7 +64,7 @@ public class UserLandingPageActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String message = "You have sent ... stickers in total";
+        String message = "You have sent ... stickers in total!";
         messages_count_text_view.setText(message);
         setSendMessagesCountForUser(sender_name);
     }
@@ -72,7 +72,7 @@ public class UserLandingPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String message = "You have sent ... stickers in total";
+        String message = "You have sent ... stickers in total!";
         messages_count_text_view.setText(message);
         setSendMessagesCountForUser(sender_name);
     }
@@ -86,17 +86,17 @@ public class UserLandingPageActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener((OnCompleteListener<DataSnapshot>) task -> {
                     if (!task.isSuccessful()) {
-                        Log.e("firebase access unsuccessful", "Error getting data", task.getException());
+                        Log.e("Firebase access unsuccessful", "Error getting data", task.getException());
                     } else {
                         if(task.getResult().getValue() == null) {
                             // should not be null
-                            Log.e("firebase wrong result", "Null message count value. " +
+                            Log.e("Firebase wrong result", "Null message count value. " +
                                     "Should not happen", task.getException());
                         } else {
                             HashMap<Object, HashMap<String, String>> map = (HashMap<Object, HashMap<String, String>>) task.getResult().getValue();
                             for (HashMap<String, String> user: map.values()) {
                                 int x = Integer.parseInt(user.get("count"));
-                                String message = "You have sent " + x + " stickers in total";
+                                String message = "You have sent " + x + " stickers in total!";
                                 messages_count_text_view.setText(message);
                             }
                         }
