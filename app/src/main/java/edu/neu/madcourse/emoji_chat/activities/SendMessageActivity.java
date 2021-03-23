@@ -173,7 +173,6 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         }
         selected_emoji = findViewById(newSelectedEmojiId);
         selected_emoji.setColorFilter(HIGHLIGHT_COLOR);
-
     }
 
     private void incrementSendMessagesCountForUser(String userName) {
