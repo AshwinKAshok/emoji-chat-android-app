@@ -61,6 +61,22 @@ public class UserLandingPageActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String message = "You have sent ... stickers in total";
+        messages_count_text_view.setText(message);
+        setSendMessagesCountForUser(sender_name);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String message = "You have sent ... stickers in total";
+        messages_count_text_view.setText(message);
+        setSendMessagesCountForUser(sender_name);
+    }
+
     private void setSendMessagesCountForUser(String userName) {
         FirebaseDatabase root_node = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = root_node.getReference("users");
