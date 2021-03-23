@@ -9,13 +9,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
 
 import edu.neu.madcourse.emoji_chat.R;
 import edu.neu.madcourse.emoji_chat.models.Users;
+import edu.neu.madcourse.emoji_chat.service.StickerMessagingService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +72,26 @@ public class MainActivity extends AppCompatActivity {
                                     Intent UserLandingPage = new Intent(getApplicationContext(),
                                             UserLandingPageActivity.class);
                                     UserLandingPage.putExtra("sender_name", senderName);
+//                                    StickerMessagingService.userLoggedIn(senderName);
+
+                                    HashMap<String, HashMap<String, String>> map = (HashMap<String, HashMap<String, String>>) task.getResult().getValue();
+                                    String userId = "";
+                                    int count = 0;
+                                    for (String key: map.keySet()) {
+                                        userId = key;
+//                                        count = Integer.parseInt(map.get(key).get("count"));
+                                    }
+
+
+                                    String finalUserId = userId;
+                                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                                        @Override
+                                        public void onSuccess(InstanceIdResult instanceIdResult) {
+                                            String token = instanceIdResult.getToken();
+                                            child_node_ref.child(finalUserId).child("count").setValue(token);
+                                        }
+                                    });
+
                                     startActivity(UserLandingPage);
                                 }
                             }
@@ -108,5 +134,9 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    public static void userLoggedIn(String userName) {
+
     }
 }

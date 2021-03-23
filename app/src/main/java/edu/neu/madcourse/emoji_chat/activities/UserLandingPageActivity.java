@@ -95,7 +95,7 @@ public class UserLandingPageActivity extends AppCompatActivity {
                         } else {
                             HashMap<Object, HashMap<String, String>> map = (HashMap<Object, HashMap<String, String>>) task.getResult().getValue();
                             for (HashMap<String, String> user: map.values()) {
-                                int x = Integer.parseInt(user.get("count"));
+                                int x = 5; //Integer.parseInt(user.get("count"));
                                 String message = "You have sent " + x + " stickers in total";
                                 messages_count_text_view.setText(message);
                             }

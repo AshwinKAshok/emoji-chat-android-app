@@ -16,6 +16,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.HashMap;
 
 import edu.neu.madcourse.emoji_chat.R;
@@ -45,6 +53,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     private static final int HIGHLIGHT_COLOR = Color.argb(75, 100, 100, 200);
     private static final int NON_HIGHLIGHT_COLOR = Color.argb(0, 0, 0, 0);
+
+    private static final String SERVER_KEY = "AAAAud3ClwM:APA91bF4meN-YyYSynm7YAEAu1Jaqq3IxYz5_fpS5_ZhkWqhTIFj9Mg37eNZZ6efrWmPxUAYm029p1moouEBZgMAiZK3hfcMcpnp_2Cbm9x2LJqYAl5vSJt8sogLqxtMu3-xplUHkP4R";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +121,18 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
                                                 .child(receiverName + "-received");
                                         DatabaseReference newRef = child_node_ref.push();
                                         newRef.setValue(message);
+
+                                        HashMap<String, HashMap<String, String>> map = (HashMap<String, HashMap<String, String>>) task.getResult().getValue();
+                                        String userId = "";
+                                        String recipientToken = "";
+                                        for (String key: map.keySet()) {
+                                            userId = key;
+                                            recipientToken = map.get(key).get("count");
+                                        }
+
+                                        String finalRecipientToken = recipientToken;
+                                        new Thread(() -> sendMessage(finalRecipientToken, senderName)).start();
+
                                         Snackbar.make(v, "Message sent!",
                                                 Snackbar.LENGTH_SHORT).show();
                                         clearSelectedData();
@@ -176,6 +198,38 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         selected_emoji.setColorFilter(HIGHLIGHT_COLOR);
     }
 
+
+    private void sendMessage(String targetToken, String sender) {
+        JSONObject jPayload = new JSONObject();
+        JSONObject jNotification = new JSONObject();
+        try {
+            jNotification.put("title", "New Sticker");
+            jNotification.put("body", "You received a new sticker from " + sender + ".");
+            jNotification.put("sound", "default");
+            jNotification.put("badge", "1");
+
+            System.out.println("target token: " + targetToken);
+            jPayload.put("to", targetToken);
+
+            jPayload.put("priority", "high");
+            jPayload.put("notification", jNotification);
+
+            URL url = new URL("https://fcm.googleapis.com/fcm/send");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", SERVER_KEY);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+
+            OutputStream outputStream = conn.getOutputStream();
+            outputStream.write(jPayload.toString().getBytes());
+            outputStream.close();
+            conn.getInputStream();
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void incrementSendMessagesCountForUser(String userName) {
         usersRef.orderByChild("name")
                 .equalTo(userName)
@@ -195,12 +249,12 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
                             int count = 0;
                             for (String key: map.keySet()) {
                                 userId = key;
-                                count = Integer.parseInt(map.get(key).get("count"));
+//                                count = Integer.parseInt(map.get(key).get("count"));
                             }
 
                             // increment current count value and put back to database
                             count++;
-                            usersRef.child(userId).child("count").setValue(Integer.toString(count));
+//                            usersRef.child(userId).child("count").setValue(Integer.toString(count));
                         }
                     }
                 });
