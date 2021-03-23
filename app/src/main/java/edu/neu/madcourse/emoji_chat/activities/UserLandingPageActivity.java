@@ -9,11 +9,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.neu.madcourse.emoji_chat.R;
@@ -41,9 +44,9 @@ public class UserLandingPageActivity extends AppCompatActivity {
             sender_name = extras.getString("sender_name");
         }
 
-        int currMessageCount = getSendMessagesCountForUser(sender_name);
-        String message = "You have sent " + currMessageCount + " stickers in total";
+        String message = "You have sent ... stickers in total";
         messages_count_text_view.setText(message);
+        setSendMessagesCountForUser(sender_name);
 
         start_send_messages_activity_button.setOnClickListener(v -> {
             Intent sent_message_activity = new Intent(getApplicationContext(), SendMessageActivity.class);
@@ -58,10 +61,9 @@ public class UserLandingPageActivity extends AppCompatActivity {
         });
     }
 
-    private int getSendMessagesCountForUser(String userName) {
+    private void setSendMessagesCountForUser(String userName) {
         FirebaseDatabase root_node = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = root_node.getReference("users");
-        AtomicInteger msgCount = new AtomicInteger();
 
         usersRef.orderByChild("name")
                 .equalTo(userName)
@@ -75,15 +77,14 @@ public class UserLandingPageActivity extends AppCompatActivity {
                             Log.e("firebase wrong result", "Null message count value. " +
                                     "Should not happen", task.getException());
                         } else {
-                            System.out.println(task.getResult().getValue());
                             HashMap<Object, HashMap<String, String>> map = (HashMap<Object, HashMap<String, String>>) task.getResult().getValue();
                             for (HashMap<String, String> user: map.values()) {
-                                msgCount.set(Integer.parseInt(user.get("count")));
+                                int x = Integer.parseInt(user.get("count"));
+                                String message = "You have sent " + x + " stickers in total";
+                                messages_count_text_view.setText(message);
                             }
                         }
                     }
                 });
-
-        return msgCount.get();
     }
 }
