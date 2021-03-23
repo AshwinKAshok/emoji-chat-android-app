@@ -44,7 +44,7 @@ public class UserLandingPageActivity extends AppCompatActivity {
             sender_name = extras.getString("sender_name");
         }
 
-        String message = "You have sent ... stickers in total";
+        String message = "You have sent ... stickers in total!";
         messages_count_text_view.setText(message);
         setSendMessagesCountForUser(sender_name);
 
