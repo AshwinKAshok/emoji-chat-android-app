@@ -74,7 +74,7 @@ public class AllMessagesActivity extends AppCompatActivity {
                     sticker.child("sender").getValue().toString()
             );
 
-            stickers.add(newSticker);
+            stickers.add(0,newSticker);
         }
 
     }
