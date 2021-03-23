@@ -54,7 +54,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
     private static final int HIGHLIGHT_COLOR = Color.argb(75, 100, 100, 200);
     private static final int NON_HIGHLIGHT_COLOR = Color.argb(0, 0, 0, 0);
 
-    private static final String SERVER_KEY = "AAAAud3ClwM:APA91bF4meN-YyYSynm7YAEAu1Jaqq3IxYz5_fpS5_ZhkWqhTIFj9Mg37eNZZ6efrWmPxUAYm029p1moouEBZgMAiZK3hfcMcpnp_2Cbm9x2LJqYAl5vSJt8sogLqxtMu3-xplUHkP4R";
+    private static final String SERVER_KEY = "key=AAAAud3ClwM:APA91bF4meN-YyYSynm7YAEAu1Jaqq3IxYz5_fpS5_ZhkWqhTIFj9Mg37eNZZ6efrWmPxUAYm029p1moouEBZgMAiZK3hfcMcpnp_2Cbm9x2LJqYAl5vSJt8sogLqxtMu3-xplUHkP4R";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

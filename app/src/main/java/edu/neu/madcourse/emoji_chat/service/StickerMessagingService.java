@@ -19,6 +19,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import edu.neu.madcourse.emoji_chat.R;
 import edu.neu.madcourse.emoji_chat.activities.AllMessagesActivity;
+import edu.neu.madcourse.emoji_chat.activities.MainActivity;
 
 public class StickerMessagingService extends FirebaseMessagingService {
     private static final String TAG = StickerMessagingService.class.getSimpleName();
@@ -58,7 +59,7 @@ public class StickerMessagingService extends FirebaseMessagingService {
     }
 
     private void showNotification(RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, AllMessagesActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
