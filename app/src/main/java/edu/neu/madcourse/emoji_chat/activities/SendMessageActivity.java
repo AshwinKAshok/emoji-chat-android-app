@@ -163,7 +163,6 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
             selected_emoji.setColorFilter(NON_HIGHLIGHT_COLOR);
         }
         selected_emoji = null;
-        receiver_name_text_view.setText("");
     }
 
     public void highlightSelectedEmoji(int newSelectedEmojiId){
