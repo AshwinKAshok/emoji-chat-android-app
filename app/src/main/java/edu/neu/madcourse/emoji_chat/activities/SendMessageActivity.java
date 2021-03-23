@@ -43,7 +43,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     ImageView selected_emoji;
 
-    private static final int HIGHLIGHT_COLOR = Color.argb(50, 100, 100, 100);
+    private static final int HIGHLIGHT_COLOR = Color.argb(75, 100, 100, 200);
     private static final int NON_HIGHLIGHT_COLOR = Color.argb(0, 0, 0, 0);
 
     @Override
@@ -76,6 +76,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         setEmojiListeners();
 
         send_message_button.setOnClickListener(v -> {
+
             receiverName = receiver_name_text_view.getText().toString();
             DatabaseReference usersRef = root_node.getReference("users");
 
@@ -89,7 +90,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
                         .addOnCompleteListener((OnCompleteListener<DataSnapshot>) task -> {
                             if (!task.isSuccessful()) {
                                 Log.e("firebase access unsuccessful", "Error getting data", task.getException());
-                                Snackbar.make(v, "Please try again!",
+                                Snackbar.make(v, "Error connecting to the database. Please try again!",
                                         Snackbar.LENGTH_LONG).show();
                             } else {
                                 Log.d("firebase", String.valueOf(task.getResult().getValue()));
@@ -100,15 +101,23 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
                                                     "Entered user doesn't exists.",
                                             Snackbar.LENGTH_SHORT).show();
                                 } else {
-                                    // Increment send message counter of sender username
-                                    incrementSendMessagesCountForUser(senderName);
+                                    if (selected_emoji != null){
+                                        // Increment send message counter of sender username
+                                        incrementSendMessagesCountForUser(senderName);
 
-                                    String msg = selected_emoji.getTag().toString(); //message_text_view.getText().toString();
-                                    Message message = new Message(senderName, receiverName, msg);
-                                    child_node_ref = root_node.getReference("messages")
-                                            .child(receiverName + "-received");
-                                    DatabaseReference newRef = child_node_ref.push();
-                                    newRef.setValue(message);
+                                        String msg = selected_emoji.getTag().toString(); //message_text_view.getText().toString();
+                                        Message message = new Message(senderName, receiverName, msg);
+                                        child_node_ref = root_node.getReference("messages")
+                                                .child(receiverName + "-received");
+                                        DatabaseReference newRef = child_node_ref.push();
+                                        newRef.setValue(message);
+                                        Snackbar.make(v, "Message sent!",
+                                                Snackbar.LENGTH_SHORT).show();
+                                        clearSelectedData();
+                                    } else{
+                                        Snackbar.make(v, "Please select the emoji you want to send!",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         });
@@ -151,12 +160,21 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    public void clearSelectedData(){
+        if(selected_emoji != null){
+            selected_emoji.setColorFilter(NON_HIGHLIGHT_COLOR);
+        }
+        selected_emoji = null;
+        receiver_name_text_view.setText("");
+    }
+
     public void highlightSelectedEmoji(int newSelectedEmojiId){
         if(selected_emoji != null){
             selected_emoji.setColorFilter(NON_HIGHLIGHT_COLOR);
         }
         selected_emoji = findViewById(newSelectedEmojiId);
         selected_emoji.setColorFilter(HIGHLIGHT_COLOR);
+
     }
 
     private void incrementSendMessagesCountForUser(String userName) {
